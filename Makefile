@@ -5,8 +5,12 @@ SENTEDBOOKS=$(BOOKS:%=results/%.sent.txt)
 NO_METADATA=$(BOOKS:%=data/%.no_md.txt)
 ALL_FREQ=$(BOOKS:%=results/all.freq.txt)
 ALL_SENT=$(BOOKS:%=results/all.sent.txt)
+PARSEDBOOKS=$(BOOKS:%=results/%.parsed.txt) 
 
-all: $(FREQLISTS) $(SENTEDBOOKS) $(ALL_FREQ) $(ALL_SENT)
+all: $(FREQLISTS) $(SENTEDBOOKS) $(ALL_FREQ) $(ALL_SENT) $(PARSEDBOOKS)
+
+results/%.parsed.txt: results/%.sent.txt
+	python3 src/parse.py $< $@
 
 clean:
 	rm -f results/* data/*no_md.txt
